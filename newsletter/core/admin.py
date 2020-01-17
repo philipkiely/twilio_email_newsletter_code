@@ -3,7 +3,7 @@ from .models import Subscriber, Newsletter
 
 def send_newsletter(modeladmin, request, queryset):
     for newsletter in queryset:
-        newsletter.send()
+        newsletter.send(request)
 send_newsletter.short_description = "Send selected Newsletters to all subscribers"
 
 class NewsletterAdmin(admin.ModelAdmin):

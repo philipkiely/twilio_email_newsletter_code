@@ -21,7 +21,7 @@ class Newsletter(models.Model):
     def __str__(self):
         return self.subject + " " + self.created_at.strftime("%B %d, %Y")
 
-    def send(self):
+    def send(self, request):
         contents = self.contents.read().decode('utf-8')
         subscribers = Subscriber.objects.filter(confirmed=True)
         sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
@@ -31,8 +31,8 @@ class Newsletter(models.Model):
                 to_emails=sub.email,
                 subject=self.subject,
                 html_content=contents + '<br><a href="{}/delete/?email={}\
-                &conf_num={}">Unsubscribe</a>.'.format(settings.SITE_URL,
+                &conf_num={}">Unsubscribe</a>.'.format(request.build_absolute_uri('/delete/'),
                                                        sub.email,
                                                        sub.conf_num))
-            response = sg.send(message)
+            sg.send(message)
 

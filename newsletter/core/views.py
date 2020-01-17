@@ -28,7 +28,7 @@ def new(request):
             html_content='Thank you for signing up for my email newsletter! \
                 Please complete the process by \
                 <a href="{}/confirm/?email={}&conf_num={}"> clicking here to \
-                confirm your registration</a>.'.format(settings.SITE_URL,
+                confirm your registration</a>.'.format(request.build_absolute_uri('/confirm/'),
                                                     sub.email,
                                                     sub.conf_num))
         sg = SendGridAPIClient(settings.SENDGRID_API_KEY)

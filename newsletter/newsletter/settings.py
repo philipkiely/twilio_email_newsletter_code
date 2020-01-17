@@ -119,7 +119,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-MEDIA_URL = 'media/'
+MEDIA_URL = 'uploaded_newsletters/'
 
-FROM_EMAIL = 'newsletter@example.com'
+FROM_EMAIL = 'newsletter@example.com' # replace with your address
 SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY')
+SITE_URL = 'http://127.0.0.1:8000' # URL published in email links

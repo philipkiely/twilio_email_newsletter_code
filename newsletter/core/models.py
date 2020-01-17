@@ -24,12 +24,15 @@ class Newsletter(models.Model):
     def send(self):
         contents = self.contents.read().decode('utf-8')
         subscribers = Subscriber.objects.filter(confirmed=True)
+        sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
         for sub in subscribers:
             message = Mail(
                 from_email=settings.FROM_EMAIL,
                 to_emails=sub.email,
                 subject=self.subject,
-                html_content=contents + '<br><a href="http://127.0.0.1:8000/delete/?email={}&conf_num={}">Unsubscribe</a>.'.format(sub.email, sub.conf_num))
-            sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
+                html_content=contents + '<br><a href="{}/delete/?email={}\
+                &conf_num={}">Unsubscribe</a>.'.format(settings.SITE_URL,
+                                                       sub.email,
+                                                       sub.conf_num))
             response = sg.send(message)
 

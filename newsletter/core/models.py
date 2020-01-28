@@ -30,7 +30,7 @@ class Newsletter(models.Model):
                 from_email=settings.FROM_EMAIL,
                 to_emails=sub.email,
                 subject=self.subject,
-                html_content=contents + '<br><a href="{}/delete/?email={}\
+                html_content=contents + '<br><a href="{}?email={}\
                 &conf_num={}">Unsubscribe</a>.'.format(request.build_absolute_uri('/delete/'),
                                                        sub.email,
                                                        sub.conf_num))
